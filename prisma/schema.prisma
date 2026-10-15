@@ -1,0 +1,236 @@
+// Retro Course Studio — data model
+// SQLite does not support Prisma enums, so constrained values are stored as
+// String and narrowed by the zod schemas in src/lib/validation.ts.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  // Runtime traffic uses the pooled URL; migrations need the direct one
+  // (Neon: DATABASE_URL has "-pooler", DIRECT_URL does not).
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String    @default("")
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  sessions     Session[]
+  certificates Certificate[]
+  providers    AccountProvider[]
+  progress     Progress[]
+  attempts     Attempt[]
+  courses      Course[]
+}
+
+model AccountProvider {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   // openrouter | gemini | openai | anthropic | ollama | custom | ...
+  model     String
+  key       String
+  baseUrl   String   @default("")
+  // Exactly one row per user is active; it drives generation and tutoring.
+  // Rows predating this flag are all active=false and the resolver falls
+  // back to the oldest row, so nothing breaks mid-migration.
+  active    Boolean  @default(false)
+  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@map("account_providers")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Certificate {
+  id          String   @id @default(cuid())
+  serial      String   @unique
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  recipient   String
+  courseTitle String
+  score       Int      @default(0)
+  lessons     Int      @default(0)
+  issuedAt    DateTime @default(now())
+
+  @@unique([userId, courseId])
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  // null = a device-local course made before accounts (or by the seed); every
+  // course generated through the app carries the generating account's id.
+  userId      String?
+  title       String
+  topic       String
+  level       String // beginner | intermediate | advanced
+  summary     String   @default("")
+  status      String   @default("draft") // draft | generating | review | published
+  coverStyle  String   @default("grid") // grid | circuit | wave
+  estMinutes  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  certificates Certificate[]
+
+  modules       Module[]
+  sources       Source[]
+  prerequisites Prerequisite[]
+  assessments   Assessment[]
+  progress      Progress[]
+  runs          GenerationRun[]
+  attachments   Attachment[]
+
+  @@index([status])
+  @@index([userId])
+}
+
+model Module {
+  id        String @id @default(cuid())
+  courseId  String
+  title     String
+  summary   String @default("")
+  position  Int
+  course    Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons   Lesson[]
+
+  @@index([courseId, position])
+}
+
+model Lesson {
+  id          String   @id @default(cuid())
+  moduleId    String
+  title       String
+  kind        String   @default("reading") // reading | playground
+  summary     String   @default("")
+  contentMd   String   @default("")
+  codeStarter String?
+  codeSolution String?
+  codeLanguage String  @default("javascript")
+  position    Int
+  estMinutes  Int      @default(8)
+  module      Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  progress    Progress[]
+
+  @@index([moduleId, position])
+}
+
+model Source {
+  id         String  @id @default(cuid())
+  courseId   String
+  title      String
+  url        String
+  publisher  String  @default("")
+  reliability Int    @default(50)
+  snippet    String  @default("")
+  course     Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+}
+
+model Prerequisite {
+  id       String @id @default(cuid())
+  courseId String
+  title    String
+  reason   String @default("")
+  status   String @default("missing") // missing | covered | teaching
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+}
+
+model Assessment {
+  id          String  @id @default(cuid())
+  courseId    String
+  kind        String // mcq | truefalse | shortanswer | code
+  prompt      String
+  optionsJson String  @default("[]")
+  answer      String  @default("")
+  explanation String  @default("")
+  difficulty  String  @default("core") // core | stretch
+  points      Int     @default(1)
+  moduleTitle String  @default("")
+  course      Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  attempts    Attempt[]
+
+  @@index([courseId])
+}
+
+model Progress {
+  id          String    @id @default(cuid())
+  courseId    String
+  lessonId    String
+  // null = device-local row made before accounts (or by the seed); every
+  // write from the app carries the signed-in user's id.
+  userId      String?
+  status      String    @default("done") // done
+  completedAt DateTime  @default(now())
+  course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lesson      Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId, lessonId])
+}
+
+model Attempt {
+  id           String     @id @default(cuid())
+  assessmentId String
+  userId       String?
+  answerJson   String
+  correct      Boolean    @default(false)
+  score        Float      @default(0)
+  createdAt    DateTime   @default(now())
+  assessment   Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  user         User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+  @@index([userId])
+}
+
+model Attachment {
+  id        String   @id @default(cuid())
+  courseId  String
+  name      String
+  kind      String   @default("text") // text | code | data | notes
+  size      Int      @default(0)
+  chars     Int      @default(0)
+  text      String
+  position  Int
+  createdAt DateTime @default(now())
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+}
+
+model GenerationRun {
+  id        String   @id @default(cuid())
+  courseId  String
+  stage     String
+  status    String   @default("pending") // pending | running | done | failed
+  progress  Int      @default(0)
+  message   String   @default("")
+  createdAt DateTime @default(now())
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+}

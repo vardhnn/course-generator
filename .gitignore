@@ -55,3 +55,8 @@ prisma/*.db-wal
 # scratch scripts and logs
 /tmp/
 *.log
+/pgdiff.err
+/probe*.mjs
+
+# generated architecture artifacts (never part of the app)
+/.archify/
