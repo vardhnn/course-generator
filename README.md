@@ -25,7 +25,7 @@ npm run db:seed    # 3 demo courses + progress/attempts (mock provider when no k
 | --- | --- |
 | `npm run dev` | Embedded PostgreSQL (auto-start/attach) + `prisma migrate deploy` + dev server |
 | `npm run build` / `npm start` | Production build / serve |
-| `npm run vercel-build` | What Vercel runs: `prisma migrate deploy && next build` |
+| `npm run vercel-build` | What Vercel runs: `next build` (schema is applied out-of-band, see Deployment) |
 | `npm test` | Vitest against its own disposable embedded PostgreSQL (port 54330) — never touches your dev data |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run db:local` | Run the embedded PostgreSQL alone (foreground) |
@@ -76,20 +76,37 @@ git remote add origin <your-github-url> && git push -u origin main
 The schema targets PostgreSQL (`provider = "postgresql"`), which is what Vercel serverless can
 actually persist — the embedded/local file never ships.
 
-1. Create a Neon database (Vercel Marketplace → Neon is the easiest path) and import the repo at
-   vercel.com — the framework auto-detects Next.js; no `vercel.json` needed.
-2. Set project environment variables: `DATABASE_URL` (pooled `-pooler` URL), `DIRECT_URL`
-   (unpooled URL), plus optionally `EXA_API_KEY` and `NEXT_PUBLIC_SITE_URL` (the deployment URL).
+1. Create a Supabase (or Neon) database and import the repo at vercel.com — the framework
+   auto-detects Next.js; no `vercel.json` needed.
+2. Set project environment variables: `DATABASE_URL` (pooled URL) and `DIRECT_URL` (migrations
+   URL), plus optionally `EXA_API_KEY` and `NEXT_PUBLIC_SITE_URL` (the deployment URL).
    Note: Vercel build logs and error messages never print these values.
-3. Deploy. The build runs `npm run vercel-build` (`prisma migrate deploy && next build`), so the
-   baseline migration is applied automatically on the first deploy and on every later one.
-   `postinstall` runs `prisma generate`, so the client is built on Vercel too.
-4. `export const maxDuration = 300` on `/api/generate` equals the Hobby plan maximum under Fluid
+
+   For Supabase, both point at the **shared pooler**, never the direct host:
+
+   - `DATABASE_URL` — transaction mode, port **6543**, `?pgbouncer=true`: `postgres://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres?pgbouncer=true`
+   - `DIRECT_URL` — session mode, port **5432**: `postgres://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres`
+
+   The direct host `db.<ref>.supabase.co` is IPv6-only on the free tier and Vercel is
+   IPv4-only, so it is unreachable from a Vercel build or function. Both pooler endpoints are
+   IPv4. Never use the direct host for either variable.
+3. Apply the baseline migration to that database once, out-of-band — `npx prisma migrate deploy`
+   from a machine that can reach it, or the Supabase/Neon dashboard SQL editor with
+   `prisma/migrations/20261014_baseline/migration.sql`. The build deliberately does **not** run
+   migrations: Vercel's build machine reaches Supabase's direct host only over IPv6, so a
+   build-time `migrate deploy` cannot connect. Every page is `force-dynamic`, so `next build`
+   never queries the database.
+4. Deploy. The build runs `npm run vercel-build` (`next build`). `postinstall` runs
+   `prisma generate`, so the client is built on Vercel too.
+5. `export const maxDuration = 300` on `/api/generate` equals the Hobby plan maximum under Fluid
    Compute — valid on Hobby; at the limit Vercel kills the invocation with a 504, so generations
    that can exceed five minutes want Pro (800s).
 
 ### Production database notes
 
+- **Supabase**: `DATABASE_URL` = transaction pooler (6543, `?pgbouncer=true`), `DIRECT_URL` =
+  session pooler (5432). Both are IPv4; the direct host is IPv6-only and unreachable from
+  Vercel. Apply migrations out-of-band (see Deployment) — the build does not run them.
 - **Neon**: use the pooled endpoint in `DATABASE_URL` and the unpooled one in `DIRECT_URL`;
   Prisma's schema declares `directUrl` so migrations never go through the pooler.
 - Local development and tests do not need Neon — they run against the embedded PostgreSQL.
