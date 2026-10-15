@@ -1,0 +1,296 @@
+
+> retro-course-studio@0.1.0 dev
+> node scripts/dev.mjs
+
+Starting local PostgreSQL…
+2026-10-15 17:48:33.138 IST [10552] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+
+2026-10-15 17:48:33.141 IST [10552] LOG:  listening on IPv6 address "::1", port 54329
+
+2026-10-15 17:48:33.141 IST [10552] LOG:  listening on IPv4 address "127.0.0.1", port 54329
+
+2026-10-15 17:48:33.212 IST [35528] LOG:  database system was interrupted; last known up at 2026-10-15 17:45:17 IST
+
+2026-10-15 17:48:33.567 IST [35528] LOG:  database system was not properly shut down; automatic recovery in progress
+
+2026-10-15 17:48:33.570 IST [35528] LOG:  invalid record length at 0/1ECA3D0: expected at least 24, got 0
+2026-10-15 17:48:33.570 IST [35528] LOG:  redo is not required
+
+2026-10-15 17:48:33.584 IST [34392] LOG:  checkpoint starting: end-of-recovery immediate wait
+
+2026-10-15 17:48:33.603 IST [34392] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.003 s, total=0.030 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/1ECA3D0, redo lsn=0/1ECA3D0
+
+2026-10-15 17:48:33.612 IST [10552] LOG:  database system is ready to accept connections
+
+Ready at postgresql://postgres:postgres@localhost:54329/retro_course_studio
+Applying migrations…
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+Datasource "db": PostgreSQL database "retro_course_studio", schema "public" at "localhost:54329"
+
+1 migration found in prisma/migrations
+
+
+No pending migrations to apply.
+▲ Next.js 16.3.8 (Turbopack)
+- Local:         http://localhost:63699
+- Network:       http://192.168.29.134:63699
+- Environments: .env.local, .env
+✓ Ready in 422ms
+✓ Running next.config.ts took 40ms
+⚠ Turbopack's filesystem cache has been deleted because we previously detected an internal error in Turbopack. Builds or page loads may be slower as a result.
+
+ GET / 200 in 2.8s (next.js: 2.6s, application-code: 175ms)
+ GET /library 200 in 871ms (next.js: 449ms, application-code: 423ms)
+ GET /login 200 in 225ms (next.js: 193ms, application-code: 32ms)
+ GET /dashboard 200 in 465ms (next.js: 349ms, application-code: 115ms)
+ GET / 200 in 50ms (next.js: 14ms, application-code: 36ms)
+ GET / 200 in 61ms (next.js: 7ms, application-code: 53ms)
+ GET /login?mode=signup 200 in 22ms (next.js: 8ms, application-code: 14ms)
+ POST /api/auth/signup 201 in 635ms (next.js: 563ms, application-code: 73ms)
+ GET /dashboard 200 in 104ms (next.js: 6ms, application-code: 99ms)
+ GET /dashboard 200 in 113ms (next.js: 7ms, application-code: 106ms)
+2026-10-15 17:53:33.611 IST [34392] LOG:  checkpoint starting: time
+
+2026-10-15 17:53:37.020 IST [34392] LOG:  checkpoint complete: wrote 31 buffers (0.2%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=3.384 s, sync=0.018 s, total=3.409 s; sync files=30, longest=0.002 s, average=0.001 s; distance=110 kB, estimate=110 kB; lsn=0/1EE5C70, redo lsn=0/1EE5BE0
+
+ GET /dashboard 200 in 344ms (next.js: 5ms, application-code: 339ms)
+[browser] ./src/lib/auth.ts:67:1
+Error: 'import', and 'export' cannot be used outside of module code
+  65 |  */
+  66 | export function requestFromCookie(cookie?: string): Request {
+> 67 | export function sessionTokenFromRequest(request: Request): string | undefined {
+     | ^^^^^^
+  68 |   const header = request.headers.get("cookie");
+  69 |   if (!header) return undefined;
+  70 |   for (const part of header.split(";")) {
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/lib/auth.ts
+    ./src/app/page.tsx 
+[browser] ./src/lib/auth.ts:67:1
+Error: 'import', and 'export' cannot be used outside of module code
+  65 |  */
+  66 | export function requestFromCookie(cookie?: string): Request {
+> 67 | export function sessionTokenFromRequest(request: Request): string | undefined {
+     | ^^^^^^
+  68 |   const header = request.headers.get("cookie");
+  69 |   if (!header) return undefined;
+  70 |   for (const part of header.split(";")) {
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/lib/auth.ts
+    ./src/app/page.tsx 
+ GET /dashboard 200 in 103ms (next.js: 12ms, application-code: 91ms)
+ GET /dashboard 200 in 86ms (next.js: 10ms, application-code: 76ms)
+2026-10-15 18:17:52.340 IST [10552] LOG:  io worker (PID 30224) was terminated by exception 0xFFFFFFFF
+2026-10-15 18:17:52.340 IST [10552] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-10-15 18:17:52.340 IST [10552] LOG:  terminating any other active server processes
+
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+2026-10-15 18:17:52.361 IST [10552] LOG:  all server processes terminated; reinitializing
+
+2026-10-15 18:17:52.410 IST [34900] LOG:  database system was interrupted; last known up at 2026-10-15 17:53:37 IST
+
+2026-10-15 18:17:52.543 IST [34900] LOG:  database system was not properly shut down; automatic recovery in progress
+
+2026-10-15 18:17:52.546 IST [34900] LOG:  redo starts at 0/1EE5BE0
+
+2026-10-15 18:17:52.546 IST [34900] LOG:  invalid record length at 0/1EE5D20: expected at least 24, got 0
+2026-10-15 18:17:52.546 IST [34900] LOG:  redo done at 0/1EE5CE8 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+
+2026-10-15 18:17:52.560 IST [27324] LOG:  checkpoint starting: end-of-recovery immediate wait
+
+2026-10-15 18:17:52.579 IST [27324] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.002 s, total=0.031 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1EE5D20, redo lsn=0/1EE5D20
+
+2026-10-15 18:17:52.596 IST [10552] LOG:  database system is ready to accept connections
+
+ GET / 200 in 53ms (next.js: 17ms, application-code: 37ms)
+ POST /api/auth/signup 201 in 71ms (next.js: 7ms, application-code: 64ms)
+ GET /library 200 in 48ms (next.js: 12ms, application-code: 37ms)
+ GET /library 200 in 36ms (next.js: 4ms, application-code: 31ms)
+ POST /api/auth/signup 201 in 34ms (next.js: 2ms, application-code: 32ms)
+ GET /library 200 in 34ms (next.js: 4ms, application-code: 30ms)
+ GET /api/auth/me 200 in 307ms (next.js: 298ms, application-code: 8ms)
+2026-10-15 18:22:52.592 IST [27324] LOG:  checkpoint starting: time
+
+2026-10-15 18:22:53.496 IST [27324] LOG:  checkpoint complete: wrote 8 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.865 s, sync=0.010 s, total=0.905 s; sync files=9, longest=0.004 s, average=0.002 s; distance=9 kB, estimate=9 kB; lsn=0/1EE8270, redo lsn=0/1EE8218
+
+ GET /dashboard 200 in 297ms (next.js: 5ms, application-code: 292ms)
+ GET /api/auth/me 200 in 13ms (next.js: 3ms, application-code: 10ms)
+ GET /library 200 in 73ms (next.js: 6ms, application-code: 67ms)
+ DELETE /api/courses/cmuux2iik0000tkisvkc8951y 200 in 951ms (next.js: 929ms, application-code: 22ms)
+ GET /library 200 in 56ms (next.js: 4ms, application-code: 51ms)
+ DELETE /api/courses/cmuux2ix80011tkisy2e9zcg3 200 in 26ms (next.js: 7ms, application-code: 20ms)
+ GET /library 200 in 57ms (next.js: 4ms, application-code: 52ms)
+ DELETE /api/courses/cmuw76wa20020tkigtzqwqpj4 200 in 18ms (next.js: 6ms, application-code: 12ms)
+ GET /library 200 in 58ms (next.js: 5ms, application-code: 52ms)
+ DELETE /api/courses/cmuux2jbs0020tkisyw12nub8 200 in 27ms (next.js: 7ms, application-code: 20ms)
+ GET /library 200 in 58ms (next.js: 8ms, application-code: 50ms)
+ DELETE /api/courses/cmuuxqgpo0002tka8kltklbyt 200 in 25ms (next.js: 8ms, application-code: 17ms)
+ GET /library 200 in 63ms (next.js: 5ms, application-code: 59ms)
+ DELETE /api/courses/cmuuz94x00000tk6o4x69uzyl 200 in 24ms (next.js: 7ms, application-code: 17ms)
+ GET /library 200 in 54ms (next.js: 6ms, application-code: 49ms)
+ DELETE /api/courses/cmuv0jh060000tkxktb0vk3x4 200 in 25ms (next.js: 7ms, application-code: 18ms)
+ GET /library 200 in 50ms (next.js: 6ms, application-code: 44ms)
+ DELETE /api/courses/cmuv2403c0000tkosz87ryskf 200 in 18ms (next.js: 6ms, application-code: 12ms)
+ GET /library 200 in 48ms (next.js: 5ms, application-code: 43ms)
+ DELETE /api/courses/cmuv2bbtn0012tkoso5nplhve 200 in 22ms (next.js: 7ms, application-code: 15ms)
+ GET /library 200 in 47ms (next.js: 6ms, application-code: 41ms)
+ DELETE /api/courses/cmuv2udlf0000tkvsa8kofudp 200 in 24ms (next.js: 7ms, application-code: 17ms)
+ GET /library 200 in 56ms (next.js: 5ms, application-code: 51ms)
+ DELETE /api/courses/cmuv35uwz0030tkvsnpb6p7vq 200 in 20ms (next.js: 7ms, application-code: 13ms)
+ GET /library 200 in 40ms (next.js: 4ms, application-code: 36ms)
+ DELETE /api/courses/cmuv6des40008tkmkyp6nu7jg 200 in 26ms (next.js: 6ms, application-code: 19ms)
+ GET /library 200 in 39ms (next.js: 4ms, application-code: 35ms)
+ DELETE /api/courses/cmuw6vrcu0000tkigzkykwqfe 200 in 23ms (next.js: 7ms, application-code: 17ms)
+ GET /library 200 in 41ms (next.js: 4ms, application-code: 36ms)
+ DELETE /api/courses/cmuw74flg0010tkigaa1yvmcg 200 in 17ms (next.js: 7ms, application-code: 10ms)
+ GET /library 200 in 40ms (next.js: 5ms, application-code: 35ms)
+ DELETE /api/courses/cmuw77nv70028tkign74bv6d6 200 in 16ms (next.js: 6ms, application-code: 10ms)
+ GET /library 200 in 36ms (next.js: 4ms, application-code: 32ms)
+ DELETE /api/courses/cmv3peola0005tkmc7qx4tu14 200 in 16ms (next.js: 6ms, application-code: 9ms)
+ GET /library 200 in 38ms (next.js: 4ms, application-code: 34ms)
+ DELETE /api/courses/cmv3ptmmm0017tkmcqe4egfqp 200 in 24ms (next.js: 6ms, application-code: 18ms)
+ GET /library 200 in 34ms (next.js: 5ms, application-code: 29ms)
+ DELETE /api/courses/cmv56jelb0005tkqocg0nlnb4 200 in 16ms (next.js: 7ms, application-code: 9ms)
+ GET /library 200 in 33ms (next.js: 5ms, application-code: 28ms)
+ DELETE /api/courses/cmv6hz3hz0005tkjk2ghu49mx 200 in 16ms (next.js: 6ms, application-code: 9ms)
+ GET /library 200 in 31ms (next.js: 4ms, application-code: 27ms)
+ GET /dashboard 200 in 30ms (next.js: 4ms, application-code: 26ms)
+ GET /dashboard 200 in 106ms (next.js: 6ms, application-code: 100ms)
+2026-10-15 18:26:52.686 IST [10552] LOG:  autovacuum worker (PID 33904) was terminated by exception 0xC0000142
+2026-10-15 18:26:52.686 IST [10552] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-10-15 18:26:52.687 IST [10552] LOG:  terminating any other active server processes
+
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+2026-10-15 18:26:52.702 IST [10552] LOG:  all server processes terminated; reinitializing
+
+2026-10-15 18:26:57.683 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000EE4: error code 487
+
+2026-10-15 18:27:03.986 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 000000000000085C: error code 487
+
+2026-10-15 18:27:10.541 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 000000000000084C: error code 487
+
+2026-10-15 18:27:23.749 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000DA4: error code 487
+
+2026-10-15 18:28:03.662 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 00000000000010CC: error code 487
+
+2026-10-15 18:28:16.537 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000C2C: error code 487
+
+2026-10-15 18:28:22.906 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000000F28: error code 487
+
+2026-10-15 18:28:58.970 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000001140: error code 487
+
+2026-10-15 18:29:05.457 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000000E98: error code 487
+
+2026-10-15 18:29:25.977 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000001048: error code 487
+
+2026-10-15 18:29:30.076 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000EF4: error code 487
+
+2026-10-15 18:29:42.638 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000954: error code 487
+
+2026-10-15 18:29:45.488 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 000000000000104C: error code 487
+
+2026-10-15 18:29:52.559 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000001788: error code 487
+
+2026-10-15 18:30:02.233 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 00000000000009F4: error code 487
+
+2026-10-15 18:30:03.261 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 000000000000091C: error code 487
+
+2026-10-15 18:30:11.547 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000DFC: error code 487
+
+2026-10-15 18:30:18.491 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000ED8: error code 487
+
+2026-10-15 18:30:19.804 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000000D7C: error code 487
+
+2026-10-15 18:30:21.795 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000000CC8: error code 487
+
+2026-10-15 18:30:21.866 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000000CC4: error code 487
+
+2026-10-15 18:30:24.540 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000DCC: error code 487
+
+2026-10-15 18:30:29.204 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000A18: error code 487
+
+2026-10-15 18:30:31.061 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 000000000000087C: error code 487
+
+2026-10-15 18:30:39.318 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 000000000000080C: error code 487
+
+2026-10-15 18:30:50.293 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000830: error code 487
+
+2026-10-15 18:30:52.549 IST [10552] LOG:  could not reserve shared memory region (addr=000002373E290000) for child 0000000000000AB8: error code 487
+
+2026-10-15 18:31:13.538 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000000E9C: error code 487
+
+2026-10-15 18:31:29.322 IST [10552] LOG:  could not reserve shared memory region (addr=000002373BA90000) for child 0000000000000BD4: error code 487
+

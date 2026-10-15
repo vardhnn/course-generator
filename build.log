@@ -1,0 +1,53 @@
+
+> retro-course-studio@0.1.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+- Environments: .env.local, .env
+✓ Running next.config.ts took 258ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 13.0s
+  Running TypeScript ...
+  Finished TypeScript in 1899ms ...
+  Collecting page data using 23 workers ...
+  Generating static pages using 23 workers (0/10) ...
+  Generating static pages using 23 workers (2/10) 
+  Generating static pages using 23 workers (4/10) 
+  Generating static pages using 23 workers (7/10) 
+✓ Generating static pages using 23 workers (10/10) in 249ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /account/provider
+├ ƒ /api/account/provider
+├ ƒ /api/account/provider/[id]
+├ ƒ /api/account/provider/[id]/test
+├ ƒ /api/assessments/[id]/attempt
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/me
+├ ƒ /api/auth/signup
+├ ƒ /api/certificates
+├ ƒ /api/courses/[id]
+├ ƒ /api/generate
+├ ƒ /api/lessons/[lessonId]/complete
+├ ƒ /api/tutor
+├ ƒ /certificate/[serial]
+├ ƒ /certificates
+├ ƒ /course/[slug]
+├ ƒ /course/[slug]/lesson/[lessonId]
+├ ƒ /course/[slug]/quiz
+├ ƒ /dashboard
+├ ƒ /generate
+├ ƒ /library
+├ ○ /login
+├ ƒ /progress
+└ ƒ /settings
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
